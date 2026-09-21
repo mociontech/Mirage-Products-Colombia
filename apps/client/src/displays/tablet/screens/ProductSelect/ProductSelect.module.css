@@ -1,0 +1,73 @@
+/**
+ * Absolute layout matching Figma's "03_Pantalla seleccion_productos" frame
+ * exactly (node 224:2810, design canvas 1920x1200 - see the comment in
+ * Home.tsx for why literal px work here with no unit conversion).
+ */
+.hint {
+  position: absolute;
+  top: 24px;
+  right: 24px;
+  margin: 0;
+  font-family: var(--font-heading);
+  font-weight: 700;
+  font-size: 32px;
+  color: var(--color-text-muted);
+  z-index: 2;
+}
+
+/* "Rectangle 82" - franja roja horizontal que separa la fila superior de la inferior. */
+.redBand {
+  position: absolute;
+  left: 0;
+  top: 889px;
+  width: 1920px;
+  height: 311px;
+  background: var(--color-primary);
+  z-index: 0;
+}
+
+.tile {
+  position: absolute;
+  background: none;
+  border: 3px solid transparent;
+  border-radius: var(--radius-sm);
+  padding: 0;
+  cursor: pointer;
+  z-index: 1;
+}
+
+.tile.selected {
+  border-color: var(--color-text);
+  background: rgba(255, 255, 255, 0.12);
+}
+
+.tilePhoto {
+  position: absolute;
+  object-fit: contain;
+  pointer-events: none;
+}
+
+.tileLogo {
+  position: absolute;
+  object-fit: contain;
+  pointer-events: none;
+}
+
+.capacityLabel {
+  position: absolute;
+  transform: translateX(-50%);
+  white-space: nowrap;
+  font-family: var(--font-heading);
+  font-weight: 700;
+  font-size: 22px;
+  color: var(--color-text);
+  pointer-events: none;
+}
+
+.confirmRow {
+  position: absolute;
+  bottom: 40px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 2;
+}

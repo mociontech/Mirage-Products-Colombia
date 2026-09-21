@@ -1,0 +1,35 @@
+/**
+ * Sized to match Figma's two ID boxes exactly (296x279 in the 1920x1200
+ * design canvas - see the comment in Register.tsx for why literal px work
+ * here with no unit conversion, same as the rest of this project's screens).
+ */
+.row {
+  display: flex;
+  align-items: center;
+  gap: 37px;
+}
+
+.group {
+  width: 296px;
+  height: 279px;
+  border: none;
+  border-radius: 16px;
+  background: var(--color-primary);
+  color: var(--color-primary-text);
+  font-family: var(--font-heading);
+  font-weight: 700;
+  font-style: italic;
+  font-size: 123px;
+  text-align: center;
+}
+
+.group::placeholder {
+  color: rgba(255, 255, 255, 0.5);
+}
+
+.separator {
+  display: inline-block;
+  width: 53px;
+  height: 6px;
+  background: var(--color-text);
+}

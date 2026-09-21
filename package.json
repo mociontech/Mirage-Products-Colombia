@@ -1,0 +1,18 @@
+{
+  "name": "mirage-catalogo-interactivo",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "workspaces": [
+    "apps/*"
+  ],
+  "scripts": {
+    "dev:client": "npm run dev --workspace @mirage/client",
+    "build:client": "npm run build --workspace @mirage/client",
+    "lint:client": "npm run lint --workspace @mirage/client",
+    "dev:server": "npm run dev --workspace @mirage/sync-server",
+    "build:server": "npm run build --workspace @mirage/sync-server",
+    "android:sync": "npm run build:client && npx cap sync android",
+    "android:build": "npm run android:sync && cd android && ./gradlew assembleRelease"
+  }
+}
