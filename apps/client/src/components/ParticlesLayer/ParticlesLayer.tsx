@@ -86,9 +86,19 @@ export function ParticlesLayer() {
         if (particle.x > width + 10) particle.x = -10;
 
         const twinkle = 0.6 + 0.4 * Math.sin(particle.twinklePhase);
+        const alpha = (particle.opacity * twinkle).toFixed(3);
+        // Rojo de marca con brillo suave (glow), no blanco solido - el
+        // fondo que uso este estado (FondoPitch.png) es mayormente
+        // blanco/claro, asi que una particula blanca practicamente
+        // desaparecia sobre el; el rojo con glow se ve tanto sobre las
+        // zonas claras como sobre las franjas rojas de la imagen.
+        ctx.beginPath();
+        ctx.arc(particle.x, particle.y, particle.radius * 2.2, 0, Math.PI * 2);
+        ctx.fillStyle = `rgba(234, 0, 41, ${(Number(alpha) * 0.35).toFixed(3)})`;
+        ctx.fill();
         ctx.beginPath();
         ctx.arc(particle.x, particle.y, particle.radius, 0, Math.PI * 2);
-        ctx.fillStyle = `rgba(255, 255, 255, ${(particle.opacity * twinkle).toFixed(3)})`;
+        ctx.fillStyle = `rgba(234, 0, 41, ${alpha})`;
         ctx.fill();
       }
 
