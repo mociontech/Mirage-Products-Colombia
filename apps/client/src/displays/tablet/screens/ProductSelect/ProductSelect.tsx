@@ -20,15 +20,15 @@ interface ProductSelectProps {
  * 3 productos mas (12 en total, ver tiles.ts), distinto al layout de banda
  * horizontal de Mexico. Cada tile es una zona tactil que emite
  * PRODUCT_PREVIEW; el pitch reacciona en vivo mientras el usuario explora.
+ * Foto y logo de cada producto son capas separadas (ver tiles.ts), no un
+ * recorte compuesto, cada una en su posicion exacta de Figma.
  *
- * Al seleccionar un producto, el tile pulsa (escala + fade) - la primera
- * version remontaba el boton entero (key distinta) para que la animacion
- * CSS se repitiera, pero eso forzaba al navegador a destruir y redecodificar
- * la imagen en cada toque = lag notorio. Ahora el boton nunca se remonta:
- * se reinicia la animacion a mano (quitar la clase, forzar reflow, volver a
- * ponerla) sobre el mismo nodo del DOM, y ningun tile trae animacion en el
- * montaje inicial (evita que las 12 fotos animen juntas al entrar a la
- * pantalla, que tambien se sentia pesado).
+ * Al seleccionar un producto, el tile pulsa (escala + fade) - el boton
+ * nunca se remonta (destruiria y redecodificaria las imagenes en cada
+ * toque = lag notorio); la animacion se reinicia a mano quitando y
+ * volviendo a poner la clase sobre el mismo nodo del DOM. Ningun tile trae
+ * animacion en el montaje inicial (evita que los 12 animen juntos al
+ * entrar a la pantalla).
  */
 export function ProductSelect({ selectedProductId, onPreview, onConfirm }: ProductSelectProps) {
   const [pulseNonce, setPulseNonce] = useState(0);
@@ -55,6 +55,11 @@ export function ProductSelect({ selectedProductId, onPreview, onConfirm }: Produ
         if (!product) return null;
         const isSelected = product.id === selectedProductId;
 
+        const left = Math.min(tile.photo.x, tile.logo.x);
+        const top = Math.min(tile.photo.y, tile.logo.y);
+        const right = Math.max(tile.photo.x + tile.photo.width, tile.logo.x + tile.logo.width);
+        const bottom = Math.max(tile.photo.y + tile.photo.height, tile.logo.y + tile.logo.height);
+
         return (
           <button
             key={product.id}
@@ -64,13 +69,34 @@ export function ProductSelect({ selectedProductId, onPreview, onConfirm }: Produ
             type="button"
             aria-label={product.name}
             className={`${styles.tile} ${isSelected ? styles.selected : ''}`}
-            style={{ left: tile.rect.x, top: tile.rect.y, width: tile.rect.width, height: tile.rect.height }}
+            style={{ left, top, width: right - left, height: bottom - top }}
             onClick={() => {
               onPreview(product.id);
               setPulseNonce((count) => count + 1);
             }}
           >
-            <img src={product.tileImage} alt="" className={styles.tileImage} />
+            <img
+              src={product.photoImage}
+              alt=""
+              className={styles.photo}
+              style={{
+                left: tile.photo.x - left,
+                top: tile.photo.y - top,
+                width: tile.photo.width,
+                height: tile.photo.height,
+              }}
+            />
+            <img
+              src={product.logoImage}
+              alt={product.name}
+              className={styles.logoTile}
+              style={{
+                left: tile.logo.x - left,
+                top: tile.logo.y - top,
+                width: tile.logo.width,
+                height: tile.logo.height,
+              }}
+            />
           </button>
         );
       })}
