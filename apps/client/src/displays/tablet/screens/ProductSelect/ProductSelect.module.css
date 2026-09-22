@@ -1,8 +1,18 @@
 /**
  * Absolute layout matching Figma's "03_Pantalla seleccion_productos" frame
- * exactly (node 224:2810, design canvas 1920x1200 - see the comment in
- * Home.tsx for why literal px work here with no unit conversion).
+ * exactly - Colombia version (node 488:4, design canvas 1920x1200 - see the
+ * comment in Home.tsx for why literal px work here with no unit conversion).
  */
+/* Logo "mirage" (node 488:97) - inset 7.42%/44.74%/85.09%/23.07% sobre el lienzo 1920x1200. */
+.logo {
+  position: absolute;
+  left: 443px;
+  top: 89px;
+  width: 618px;
+  height: 90px;
+  z-index: 2;
+}
+
 .hint {
   position: absolute;
   top: 24px;
@@ -15,13 +25,13 @@
   z-index: 2;
 }
 
-/* "Rectangle 82" - franja roja horizontal que separa la fila superior de la inferior. */
-.redBand {
+/* Franja roja lateral (node 488:6) con los 3 productos extra (X32, XLife, Life 12). */
+.sidebar {
   position: absolute;
-  left: 0;
-  top: 889px;
-  width: 1920px;
-  height: 311px;
+  left: 1435px;
+  top: 0;
+  width: 485px;
+  height: 1200px;
   background: var(--color-primary);
   z-index: 0;
 }
@@ -34,6 +44,9 @@
   padding: 0;
   cursor: pointer;
   z-index: 1;
+  /* transform/opacity en su propia capa de composicion - el navegador no
+     tiene que repintar el resto de la pantalla cuando esto anima. */
+  will-change: transform, opacity;
 }
 
 .tile.selected {
@@ -41,27 +54,35 @@
   background: rgba(255, 255, 255, 0.12);
 }
 
-.tilePhoto {
+/*
+ * Pulso al seleccionar - nunca en el montaje (evita que los 12 tiles
+ * animen juntos al entrar a la pantalla). Se reinicia a mano en
+ * ProductSelect.tsx quitando y volviendo a poner esta clase sobre el mismo
+ * boton, asi nunca hace falta destruir/recrear la imagen para repetir la
+ * animacion.
+ */
+.tile.pulsing {
+  animation: tilePulse 320ms ease-out;
+}
+
+.tileImage {
   position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
   object-fit: contain;
   pointer-events: none;
 }
 
-.tileLogo {
-  position: absolute;
-  object-fit: contain;
-  pointer-events: none;
-}
-
-.capacityLabel {
-  position: absolute;
-  transform: translateX(-50%);
-  white-space: nowrap;
-  font-family: var(--font-heading);
-  font-weight: 700;
-  font-size: 22px;
-  color: var(--color-text);
-  pointer-events: none;
+@keyframes tilePulse {
+  from {
+    transform: scale(0.92);
+    opacity: 0.6;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
 }
 
 .confirmRow {
