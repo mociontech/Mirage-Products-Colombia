@@ -2,26 +2,16 @@
  * Absolute layout matching Figma's "03_Pantalla seleccion_productos" frame
  * exactly - Colombia version (node 488:4, design canvas 1920x1200 - see the
  * comment in Home.tsx for why literal px work here with no unit conversion).
+ * Todos los valores de este archivo salen de get_metadata (x/y/width/height
+ * reales por nodo), no de porcentajes de inset redondeados a mano.
  */
-/* Logo "mirage" (node 488:97) - inset 7.42%/44.74%/85.09%/23.07% sobre el lienzo 1920x1200. */
+/* Logo "mirage" (node 488:97). */
 .logo {
   position: absolute;
-  left: 443px;
-  top: 89px;
+  left: 409px;
+  top: 83px;
   width: 618px;
   height: 90px;
-  z-index: 2;
-}
-
-.hint {
-  position: absolute;
-  top: 24px;
-  right: 24px;
-  margin: 0;
-  font-family: var(--font-heading);
-  font-weight: 700;
-  font-size: 32px;
-  color: var(--color-text-muted);
   z-index: 2;
 }
 
@@ -36,11 +26,17 @@
   z-index: 0;
 }
 
+/*
+ * Tile = la tarjeta redondeada con degradado (nodos Rectangle 84-97 en
+ * Figma) - antes el "tile" era solo el bounding box invisible de foto+logo,
+ * sin ningun fondo. radius/shadow identicos en las 12; solo cambia el
+ * degradado segun si esta en el grid blanco o en la franja roja.
+ */
 .tile {
   position: absolute;
-  background: none;
-  border: 3px solid transparent;
-  border-radius: var(--radius-sm);
+  border: none;
+  border-radius: 33px;
+  box-shadow: 0 4px 4px rgba(0, 0, 0, 0.09);
   padding: 0;
   cursor: pointer;
   z-index: 1;
@@ -49,9 +45,26 @@
   will-change: transform, opacity;
 }
 
-.tile.selected {
-  border-color: var(--color-text);
-  background: rgba(255, 255, 255, 0.12);
+.tileLight {
+  background: linear-gradient(180deg, #f4f5f5 0%, #e8e8e8 100%);
+}
+
+.tileRed {
+  background: linear-gradient(180deg, #ff0531 0%, #df032a 100%);
+}
+
+/*
+ * Borde de seleccion: rojo brillante sobre tarjetas claras, blanco sobre las
+ * rojas de la franja lateral - en ambos casos un halo desvanecido (glow),
+ * no una linea solida, para que se note la opcion elegida sin tapar la
+ * tarjeta.
+ */
+.tileLight.selected {
+  box-shadow: 0 0 0 3px rgba(234, 0, 41, 0.65), 0 0 14px 3px rgba(234, 0, 41, 0.3), 0 4px 4px rgba(0, 0, 0, 0.09);
+}
+
+.tileRed.selected {
+  box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.65), 0 0 14px 3px rgba(255, 255, 255, 0.3), 0 4px 4px rgba(0, 0, 0, 0.09);
 }
 
 /*
@@ -83,10 +96,20 @@
   }
 }
 
-.confirmRow {
+/* Boton "Continuar" (node 541:1298) - blanco con texto negro, arriba a la derecha, no abajo centrado. */
+.confirmButton {
   position: absolute;
-  bottom: 40px;
-  left: 50%;
-  transform: translateX(-50%);
+  left: 1641px;
+  top: 38px;
+  width: 218px;
+  height: 54px;
   z-index: 2;
+  border: none;
+  border-radius: 7px;
+  background: var(--color-surface);
+  color: var(--color-text);
+  font-family: var(--font-heading);
+  font-weight: 700;
+  font-size: 30px;
+  cursor: pointer;
 }
