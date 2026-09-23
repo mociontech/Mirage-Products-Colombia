@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import { ScaleViewport } from '../../components/ScaleViewport/ScaleViewport';
 import { useIdleReset } from '../../hooks/useIdleReset';
-import { useIsMobile } from '../../hooks/useIsMobile';
 import { useSync } from '../../sync/useSync';
 import { Home } from './screens/Home/Home';
 import { ProductSelect } from './screens/ProductSelect/ProductSelect';
@@ -28,7 +27,6 @@ export function TabletApp() {
   const [session, setSession] = useState<TabletSession>(EMPTY_SESSION);
   const [selectedProductId, setSelectedProductId] = useState<string | null>(null);
   const { send } = useSync('tablet');
-  const isMobile = useIsMobile();
 
   const goHome = () => {
     setScreen('home');
@@ -48,11 +46,7 @@ export function TabletApp() {
   };
 
   return (
-    <ScaleViewport
-      designWidth={TABLET_DESIGN_WIDTH}
-      designHeight={TABLET_DESIGN_HEIGHT}
-      disableScale={isMobile && screen === 'productSelect'}
-    >
+    <ScaleViewport designWidth={TABLET_DESIGN_WIDTH} designHeight={TABLET_DESIGN_HEIGHT}>
       {screen === 'home' && (
         <Home
           onStart={() => {
