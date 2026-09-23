@@ -1,4 +1,4 @@
-import fondoPitch from '../../../../assets/images/pitch-co/FondoPitch.png';
+import fondoPitch from '../../../../assets/images/pitch-co/FondoPitch.webp';
 import { ParticlesLayer } from '../../../../components/ParticlesLayer/ParticlesLayer';
 import styles from './Idle.module.css';
 

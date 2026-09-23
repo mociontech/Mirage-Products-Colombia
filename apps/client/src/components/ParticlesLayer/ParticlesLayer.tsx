@@ -12,16 +12,16 @@ interface Particle {
   twinklePhase: number;
 }
 
-const PARTICLE_COUNT = 45;
+const PARTICLE_COUNT = 55;
 
 function createParticle(width: number, height: number): Particle {
   return {
     x: Math.random() * width,
     y: Math.random() * height,
-    radius: 1 + Math.random() * 2.2,
+    radius: 2.2 + Math.random() * 4.2,
     speed: 8 + Math.random() * 18, // px/s hacia arriba
     drift: (Math.random() - 0.5) * 6, // px/s lateral
-    opacity: 0.25 + Math.random() * 0.55,
+    opacity: 0.45 + Math.random() * 0.55,
     twinkleSpeed: 0.6 + Math.random() * 1.4,
     twinklePhase: Math.random() * Math.PI * 2,
   };
