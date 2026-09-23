@@ -13,3 +13,12 @@
   flex-shrink: 0;
   background: var(--color-bg);
 }
+
+/** disableScale: sin fit-to-screen, tamano natural llenando el viewport real. */
+.naturalOuter {
+  width: 100%;
+  height: 100%;
+  background: var(--color-bg);
+  overflow-y: auto;
+  overflow-x: hidden;
+}
