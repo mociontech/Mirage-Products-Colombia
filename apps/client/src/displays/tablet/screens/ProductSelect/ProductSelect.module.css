@@ -110,6 +110,7 @@
   color: var(--color-text);
   font-family: var(--font-heading);
   font-weight: 700;
+  -webkit-text-stroke: 0.028em currentColor;
   font-size: 30px;
   cursor: pointer;
 }
