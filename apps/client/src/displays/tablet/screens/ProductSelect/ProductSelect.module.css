@@ -78,7 +78,20 @@
   animation: tilePulse 320ms ease-out;
 }
 
-.photo,
+.photoFrame {
+  position: absolute;
+  display: block;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.photo {
+  position: absolute;
+  display: block;
+  max-width: none;
+  pointer-events: none;
+}
+
 .logoTile {
   position: absolute;
   object-fit: contain;

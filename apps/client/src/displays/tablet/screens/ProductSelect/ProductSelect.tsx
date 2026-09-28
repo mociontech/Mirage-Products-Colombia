@@ -19,8 +19,9 @@ interface ProductSelectProps {
  * 3 productos mas (12 en total), distinto al layout de banda horizontal de
  * Mexico. Cada tile es una tarjeta con fondo degradado (ver
  * tiles.ts#productCards, antes ausente) + foto y logo como capas
- * independientes encima, cada una en su posicion exacta de Figma
- * (tiles.ts#productTiles, tomado de get_metadata, no de porcentajes).
+ * independientes encima, cada una en su posicion exacta de Figma. Las fotos
+ * usan un marco de recorte y una transformacion interna propia por producto,
+ * tal como salen de get_design_context.
  *
  * Al seleccionar un producto, el tile pulsa (escala + fade) - el boton
  * nunca se remonta (destruiria y redecodificaria las imagenes en cada
@@ -69,28 +70,30 @@ export function ProductSelect({ selectedProductId, onPreview, onConfirm }: Produ
               setPulseNonce((count) => count + 1);
             }}
           >
-            <img
-              src={product.photoImage}
-              alt=""
-              className={styles.photo}
+            <span
+              className={styles.photoFrame}
               style={{
                 left: tile.photo.x - card.x,
                 top: tile.photo.y - card.y,
                 width: tile.photo.width,
                 height: tile.photo.height,
               }}
-            />
-            <img
-              src={product.logoImage}
-              alt={product.name}
-              className={styles.logoTile}
-              style={{
-                left: tile.logo.x - card.x,
-                top: tile.logo.y - card.y,
-                width: tile.logo.width,
-                height: tile.logo.height,
-              }}
-            />
+            >
+              <img src={product.photoImage} alt="" className={styles.photo} style={tile.photo.crop} />
+            </span>
+            {tile.logo && (
+              <img
+                src={product.logoImage}
+                alt={product.name}
+                className={styles.logoTile}
+                style={{
+                  left: tile.logo.x - card.x,
+                  top: tile.logo.y - card.y,
+                  width: tile.logo.width,
+                  height: tile.logo.height,
+                }}
+              />
+            )}
           </button>
         );
       })}

@@ -8,10 +8,9 @@ import { products } from '../../../../content/products';
  * confirmados 1:1 contra el frame); logo = el bounding box real del grupo
  * de vectores de cada marca (los compuestos - magnum-22, v32, flux-6l,
  * ci-magnum - se verificaron contra el aspect ratio de su asset ya
- * recortado, calzan). xlife es el unico que get_metadata no devolvio (el
- * nodo no aparecio en el arbol) - se dejo el valor ya validado de una
- * iteracion anterior, que cae dentro de su tarjeta (card, ver
- * ProductSelect.tsx) sin problema.
+ * recortado). Cada foto conserva ademas el zoom/desplazamiento interno de
+ * Figma. XLife recupera su logo blanco sobre la tarjeta roja, centrado sobre
+ * el equipo.
  */
 export interface Rect {
   x: number;
@@ -20,72 +19,151 @@ export interface Rect {
   height: number;
 }
 
+export interface ImageCrop {
+  left: string;
+  top: string;
+  width: string;
+  height: string;
+}
+
 export interface ProductTile {
   productId: string;
-  photo: Rect;
-  logo: Rect;
+  photo: Rect & { crop: ImageCrop };
+  logo?: Rect;
 }
 
 export const productTiles: ProductTile[] = [
   {
     productId: 'magnum-22',
-    photo: { x: 155, y: 356, width: 218, height: 121 },
-    logo: { x: 125, y: 282, width: 277, height: 55 },
+    photo: {
+      x: 155,
+      y: 356,
+      width: 218,
+      height: 121,
+      crop: { left: '-8.72%', top: '-23.38%', width: '108.72%', height: '123.18%' },
+    },
+    logo: { x: 125, y: 281.807, width: 276.543, height: 54.739 },
   },
   {
     productId: 'nex',
-    photo: { x: 596, y: 348, width: 236, height: 138 },
-    logo: { x: 614, y: 268, width: 198, height: 86 },
+    photo: {
+      x: 596,
+      y: 348,
+      width: 236,
+      height: 138,
+      crop: { left: '-15.05%', top: '-14.28%', width: '129.57%', height: '114.19%' },
+    },
+    logo: { x: 614, y: 268, width: 198.069, height: 85.909 },
   },
   {
     productId: 'v32',
-    photo: { x: 1057, y: 329, width: 214, height: 138 },
-    logo: { x: 1077, y: 265, width: 175, height: 72 },
+    photo: {
+      x: 1057,
+      y: 329,
+      width: 214,
+      height: 138,
+      crop: { left: '-4.57%', top: '-0.2%', width: '104.69%', height: '100%' },
+    },
+    logo: { x: 1077, y: 265, width: 174.818, height: 72.091 },
   },
   {
     productId: 'neo-inverter',
-    photo: { x: 153, y: 657, width: 222, height: 141 },
-    logo: { x: 128, y: 567, width: 275, height: 78 },
+    photo: {
+      x: 153,
+      y: 657,
+      width: 222,
+      height: 141,
+      crop: { left: '-15%', top: '-18.62%', width: '115.08%', height: '118.62%' },
+    },
+    logo: { x: 128, y: 567, width: 274.714, height: 77.495 },
   },
   {
     productId: 'turbo-flux',
-    photo: { x: 770, y: 576, width: 106, height: 168 },
-    logo: { x: 558, y: 604, width: 200, height: 111 },
+    photo: {
+      x: 770,
+      y: 576,
+      width: 106,
+      height: 168,
+      crop: { left: '-0.06%', top: '-1.79%', width: '100.12%', height: '104.17%' },
+    },
+    logo: { x: 558, y: 604, width: 200.189, height: 111.091 },
   },
   {
     productId: 'flux-6l',
-    photo: { x: 1222, y: 581, width: 113, height: 157 },
-    logo: { x: 1012, y: 619, width: 206, height: 82 },
+    photo: {
+      x: 1222,
+      y: 581,
+      width: 113,
+      height: 157,
+      crop: { left: '-0.33%', top: '-14.01%', width: '100.67%', height: '114.01%' },
+    },
+    logo: { x: 1012, y: 619, width: 206.163, height: 81.978 },
   },
   {
     productId: 'flux-electric',
-    photo: { x: 314, y: 877, width: 120, height: 169 },
-    logo: { x: 111, y: 906, width: 197, height: 112 },
+    photo: {
+      x: 314,
+      y: 877,
+      width: 120,
+      height: 169,
+      crop: { left: '-0.26%', top: '-7.55%', width: '100.53%', height: '113.21%' },
+    },
+    logo: { x: 111, y: 906, width: 197, height: 111.597 },
   },
   {
     productId: 'ci-magnum',
-    photo: { x: 586, y: 951, width: 255, height: 137 },
-    logo: { x: 668, y: 878, width: 92, height: 85 },
+    photo: {
+      x: 586,
+      y: 951,
+      width: 255,
+      height: 137,
+      crop: { left: '-11.54%', top: '-0.1%', width: '121.11%', height: '100%' },
+    },
+    logo: { x: 668, y: 878, width: 92.01, height: 84.643 },
   },
   {
     productId: 'xtra-multi',
-    photo: { x: 1043, y: 956, width: 243, height: 107 },
-    logo: { x: 1027, y: 858, width: 275, height: 88 },
+    photo: {
+      x: 1043,
+      y: 956,
+      width: 243,
+      height: 107,
+      crop: { left: '-8.66%', top: '-19.09%', width: '116.88%', height: '137.93%' },
+    },
+    logo: { x: 1027, y: 858, width: 274.559, height: 88.295 },
   },
   {
     productId: 'x32',
-    photo: { x: 1578, y: 345, width: 200, height: 133 },
-    logo: { x: 1564, y: 264, width: 227, height: 93 },
+    photo: {
+      x: 1578,
+      y: 345,
+      width: 200,
+      height: 133,
+      crop: { left: '-5.23%', top: '-0.2%', width: '110.46%', height: '100%' },
+    },
+    logo: { x: 1564, y: 264, width: 226.642, height: 92.8 },
   },
   {
     productId: 'xlife',
-    photo: { x: 1580, y: 621, width: 195, height: 135 },
+    photo: {
+      x: 1580,
+      y: 621,
+      width: 195,
+      height: 135,
+      crop: { left: '-14.05%', top: '0%', width: '117.51%', height: '100%' },
+    },
     logo: { x: 1526, y: 546, width: 267, height: 99 },
   },
   {
     productId: 'life-12',
-    photo: { x: 1570, y: 921, width: 215, height: 135 },
-    logo: { x: 1556, y: 866, width: 243, height: 48 },
+    photo: {
+      x: 1570,
+      y: 921,
+      width: 215,
+      height: 135,
+      crop: { left: '-3.08%', top: '0%', width: '103.37%', height: '100%' },
+    },
+    logo: { x: 1556, y: 866.081, width: 243, height: 48.328 },
   },
 ];
 
